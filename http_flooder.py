@@ -16,11 +16,12 @@ try:
 except KeyboardInterrupt:
 	sys.exit()
 active_threads = 0
-max_threads = 100
-logging.basicConfig(format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
+max_threads = 500
 
 if "d" in sys.argv or "debug" in sys.argv:
 	logging.basicConfig(format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.DEBUG)
+else:
+	logging.basicConfig(format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 
 def HTTP(host, port):
 	try:
